@@ -2,10 +2,10 @@ def enterOperation():
     operation = input("Enter operation (+, -, *, /): ")
     return operation
 def enterNumberA():
-    a = float(input("Enter first number: "))
+    a = int(input("Enter first number: "))
     return a
 def enterNumberB():
-    b = float(input("Enter second number: "))
+    b = int(input("Enter second number: "))
     return b
 def calculate(a, b, operation):
     if operation == '+':
