@@ -11,7 +11,7 @@ list = [
 
 def printAllList():
     for elem in list:
-        strForPrint = "Student name is " + elem["name"] + ", Age is " + int(elem["age"]) + ", Phone is " + elem["phone"] + ", Country is " + elem["country"]
+        strForPrint = "Student name is " + elem["name"] + ", Age is " + str(elem["age"]) + ", Phone is " + elem["phone"] + ", Country is " + elem["country"]
         print(strForPrint)
     return
 
@@ -50,7 +50,30 @@ def deleteElement():
 
 def updateElement():
     name = input("Please enter name to be updated: ")
-    # implementation required
+    for item in list:
+        if name == item["name"]:
+            deletePosition = list.index(item)
+            break
+    if deletePosition == -1:
+        print("Element was not found")
+    else:
+        del list[deletePosition]
+    name = input("Pease enter student name: ")
+    phone = input("Please enter student phone: ")
+    age = input("Please enter student age: ")
+    country = input("Please enter student country: ")
+    newItem = {"name": name, "phone": phone, "age": age, "country": country}
+    # find insert position
+    insertPosition = 0
+    for item in list:
+        if name > item["name"]:
+            insertPosition += 1
+        else:
+            break
+    list.insert(insertPosition, newItem)
+    print("Element has been updated")
+    return
+
 
 def main():
     while True:
@@ -61,6 +84,7 @@ def main():
                 addNewElement()
                 printAllList()
             case "U" | "u":
+                updateElement()
                 print("Existing element will be updated")
             case "D" | "d":
                 print("Element will be deleted")
