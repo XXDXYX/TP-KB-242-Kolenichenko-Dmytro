@@ -31,8 +31,7 @@ def main():
         else:
             print("Invalid operation")
             continue
-    print(f"Result: {result}")
-    
-    with open("log.txt", "a") as log_file:
-        log_file.write(f"{x} {operation} {y} = {result}\n")
+        print(f"Result: {result}")
+        with open("log.txt", "a") as log_file:
+            log_file.write(f"{x} {operation} {y} = {result}\n")
 
