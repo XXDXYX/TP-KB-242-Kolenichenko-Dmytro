@@ -1,14 +1,13 @@
 from sys import argv
 import csv
-list = []
 
-def printAllList():
-    for elem in list:
+def printAllList(student_list):
+    for elem in student_list:
         strForPrint = "Student name is " + elem["name"] + ", Age is " + str(elem["age"]) + ", Phone is " + elem["phone"] + ", Country is " + elem["country"]
         print(strForPrint)
     return
 
-def addNewElement():
+def addNewElement(student_list):
     name = input("Pease enter student name: ")
     phone = input("Please enter student phone: ")
     age = input("Please enter student age: ")
@@ -16,65 +15,63 @@ def addNewElement():
     newItem = {"name": name, "phone": phone, "age": age, "country": country}
     # find insert position
     insertPosition = 0
-    for item in list:
+    for item in student_list:
         if name > item["name"]:
             insertPosition += 1
         else:
             break
-    list.insert(insertPosition, newItem)
+    student_list.insert(insertPosition, newItem)
     print("New element has been added")
     return
 
-def deleteElement():
+def deleteElement(student_list):
     name = input("Please enter name to be delated: ")
     deletePosition = -1
-    for item in list:
+    for item in student_list:
         if name == item["name"]:
-            deletePosition = list.index(item)
+            deletePosition = student_list.index(item)
             break
     if deletePosition == -1:
         print("Element was not found")
     else:
         print("Dele position " + str(deletePosition))
-        # list.pop(deletePosition)
-        del list[deletePosition]
+        del student_list[deletePosition]
     return
 
-
-def updateElement():
+def updateElement(student_list):
     name = input("Please enter name to be updated: ")
-    for item in list:
+    deletePosition = -1
+    for item in student_list:
         if name == item["name"]:
-            deletePosition = list.index(item)
+            deletePosition = student_list.index(item)
             break
     if deletePosition == -1:
         print("Element was not found")
     else:
-        del list[deletePosition]
-    name = input("Pease enter student name: ")
-    phone = input("Please enter student phone: ")
-    age = input("Please enter student age: ")
-    country = input("Please enter student country: ")
-    newItem = {"name": name, "phone": phone, "age": age, "country": country}
-    # find insert position
-    insertPosition = 0
-    for item in list:
-        if name > item["name"]:
-            insertPosition += 1
-        else:
-            break
-    list.insert(insertPosition, newItem)
-    print("Element has been updated")
+        del student_list[deletePosition]
+        name = input("Pease enter student name: ")
+        phone = input("Please enter student phone: ")
+        age = input("Please enter student age: ")
+        country = input("Please enter student country: ")
+        newItem = {"name": name, "phone": phone, "age": age, "country": country}
+        # find insert position
+        insertPosition = 0
+        for item in student_list:
+            if name > item["name"]:
+                insertPosition += 1
+            else:
+                break
+        student_list.insert(insertPosition, newItem)
+        print("Element has been updated")
     return
 
-
-
 def main():
+    student_list = []
     if len(argv) > 1:
-        with open(argv[1],'r')as file:
+        with open(argv[1],'r') as file:
             csvFile = csv.DictReader(file)
             for lines in csvFile:
-                list.append({"name": lines['name'], "age": int(lines['age']), "phone": lines['phone'], "country": lines['country']})
+                student_list.append({"name": lines['name'], "age": int(lines['age']), "phone": lines['phone'], "country": lines['country']})
     else:
         print("No input file specified")
         exit()
@@ -83,17 +80,17 @@ def main():
         match chouse:
             case "C" | "c":
                 print("New element will be created:")
-                addNewElement()
-                printAllList()
+                addNewElement(student_list)
+                printAllList(student_list)
             case "U" | "u":
-                updateElement()
                 print("Existing element will be updated")
+                updateElement(student_list)
             case "D" | "d":
                 print("Element will be deleted")
-                deleteElement()
+                deleteElement(student_list)
             case "P" | "p":
                 print("List will be printed")
-                printAllList()
+                printAllList(student_list)
             case "X" | "x":
                 print("Your data will be saved. Exiting now.")
                 break
@@ -103,7 +100,8 @@ def main():
         fieldnames = ['name', 'age', 'phone', 'country']
         writer = csv.DictWriter(file, fieldnames)
         writer.writeheader()
-        for elem in list:
+        for elem in student_list:
             writer.writerow({'name': elem["name"], 'age': elem["age"], 'phone': elem["phone"], 'country': elem["country"]})
 
-main()
+if __name__ == "__main__":
+    main()
